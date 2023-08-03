@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  jenkins-server:
+    image: jenkins/jenkins:lts
+    user: root
+    command: bash -c "apt-get update -y -q && apt-get upgrade -y -q && apt-get install -y -q git && /usr/bin/tini -- /usr/local/bin/jenkins.sh"
+    ports:
+      - 50001:8080
+      - 50002:50000
+    container_name: jenkins-server
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+        - jenkins-net
+
+  jenkins-agent:
+    image: jenkins/ssh-agent:jdk11
+    user: root
+    ports:
+      - 50003:8080
+      - 50004:50000
+    container_name: jenkins-agent
+    env_file:
+      - ./.env-agent
+    networks:
+        - jenkins-net
+
+networks:
+  jenkins-net:
+    driver: bridge
