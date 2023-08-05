@@ -1,4 +1,9 @@
-pipeline{
+pipeline {
+  agent {
+    node {
+        label 'jenkins-agent'
+    }
+  }
   stages {
     stage('test') {
       steps {
