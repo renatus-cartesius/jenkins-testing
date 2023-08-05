@@ -5,10 +5,17 @@ pipeline {
     }
   }
   stages {
-    stage('test') {
+    stage('write') {
       steps {
         sh 'ls -l'
       }
+    }
+  }
+  post {
+    always {
+      emailext body: 'Test Message',
+        subject: 'Test Subject',
+        to: 'cartesius.absolute@gmail.com'
     }
   }
 }
