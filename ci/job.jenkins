@@ -5,9 +5,13 @@ pipeline {
     }
   }
   stages {
-    stage('write') {
+    stage('timestamp') {
       steps {
-        sh 'ls -l'
+        sh 'git checkout main'
+        sh 'echo "`date +%F-%T` PRjob executed" > job.log'
+        sh 'git add .'
+				sh 'git commit -m "updated time stamp, `date +%F-%T`"'
+				sh 'git push origin main'
       }
     }
   }
