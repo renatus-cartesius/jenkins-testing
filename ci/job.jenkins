@@ -5,14 +5,24 @@ pipeline {
     }
   }
   stages {
-    stage('timestamp') {
+    stage('checkout') {
       steps {
-        sh 'git checkout main'
+        git(
+          branch: 'ci',
+          credentialsId: 'jenkins-rsa',
+          url: 'git@github.com:renatus-cartesius/jenkins-testing.git'
+        )
+      }
+    }
+
+    stage('timestamp to log'){
         sh 'echo "`date +%F-%T` PRjob executed" > job.log'
         sh 'git add .'
         sh 'git commit -m "updated time stamp, `date +%F-%T`"'
+    }
+
+    stage('push to repo'){
         sh 'git push origin main'
-      }
     }
   }
   post {
