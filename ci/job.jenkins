@@ -16,13 +16,17 @@ pipeline {
     }
 
     stage('timestamp to log'){
+      steps{
         sh 'echo "`date +%F-%T` PRjob executed" > job.log'
         sh 'git add .'
         sh 'git commit -m "updated time stamp, `date +%F-%T`"'
+      }
     }
 
     stage('push to repo'){
+      steps {
         sh 'git push origin main'
+      }
     }
   }
   post {
