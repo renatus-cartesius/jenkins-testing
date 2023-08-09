@@ -26,7 +26,9 @@ pipeline {
 
     stage('push to repo'){
       steps {
-        sh 'eval $(ssh-agent) && ssh-add ~/.ssh/jenkins-rsa && git push origin main'
+        withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-rsa', keyFileVariable: 'SSH_KEY')]) {
+          sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push origin main'
+        }
       }
     }
   }
