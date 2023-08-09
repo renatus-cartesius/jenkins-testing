@@ -34,9 +34,10 @@ pipeline {
   }
   post {
     always {
-      emailext body: 'Test Message',
-        subject: 'Test Subject',
-        to: 'cartesius.absolute@gmail.com'
+      emailext body: '$DEFAULT_CONTENT',
+        subject: '$DEFAULT_SUBJECT',
+        to: '$DEFAULT_RECIPIENTS',
+        from: 'jenkins.bot'
     }
   }
 }
