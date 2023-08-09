@@ -34,7 +34,7 @@ pipeline {
   }
   post {
     always {
-      emailext body: '$DEFAULT_CONTENT',
+      emailext body: '$DEFAULT_CONTENT\nRepo: https://github.com/renatus-cartesius/jenkins-testing',
         subject: '$DEFAULT_SUBJECT',
         to: '$DEFAULT_RECIPIENTS',
         from: 'jenkins.bot'
