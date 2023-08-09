@@ -23,7 +23,7 @@ services:
       - 50004:50000
     container_name: jenkins-agent
     env_file:
-      - ./.env-agent
+      - ./.env-agent # In .env.agent storing ENV with ssh pub-key to access from jenkins-server
     networks:
         - jenkins-net
 
